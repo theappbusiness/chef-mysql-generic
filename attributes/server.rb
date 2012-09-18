@@ -21,9 +21,26 @@ default['mysql']['bind_address']               = attribute?('cloud') ? cloud['lo
 default['mysql']['port']                       = 3306
 
 case node["platform"]
-when "centos", "redhat", "fedora", "suse", "scientific", "amazon"
+when "suse"
   default['mysql']['server']['packages']      = %w{mysql-community-server-client mysql-community-server}
   default['mysql']['server']['conflicting_packages'] = %w{mariadb mariadb-client}
+  default['mysql']['service_name']            = "mysqld"
+  default['mysql']['basedir']                 = "/usr"
+  default['mysql']['data_dir']                = "/var/lib/mysql"
+  default['mysql']['root_group']              = "root"
+  default['mysql']['mysqladmin_bin']          = "/usr/bin/mysqladmin"
+  default['mysql']['mysql_bin']               = "/usr/bin/mysql"
+
+  set['mysql']['conf_dir']                    = '/etc'
+  set['mysql']['confd_dir']                   = '/etc/mysql/conf.d'
+  set['mysql']['socket']                      = "/var/lib/mysql/mysql.sock"
+  set['mysql']['pid_file']                    = "/var/run/mysqld/mysqld.pid"
+  set['mysql']['old_passwords']               = 1
+  set['mysql']['grants_path']                 = "/etc/mysql_grants.sql"
+  # RHEL/CentOS mysql package does not support this option.
+  set['mysql']['tunable']['innodb_adaptive_flushing'] = false
+when "centos", "redhat", "fedora", "scientific", "amazon"
+  default['mysql']['server']['packages']      = %w{mysql-server}
   default['mysql']['service_name']            = "mysqld"
   default['mysql']['basedir']                 = "/usr"
   default['mysql']['data_dir']                = "/var/lib/mysql"
