@@ -74,6 +74,14 @@ if platform? 'windows'
   end
 end
 
+if platform? 'suse'
+  node['mysql']['server']['conflicting_packages'].each do |package_name|
+    package package_name do
+      action :remove
+    end
+  end
+end
+
 node['mysql']['server']['packages'].each do |package_name|
   package package_name do
     action :install

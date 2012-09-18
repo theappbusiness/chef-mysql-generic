@@ -22,6 +22,12 @@
 ::Chef::Recipe.send(:include, Opscode::Mysql::Helpers)
 
 case node['platform']
+when "suse"
+  if node['platform_version'].to_f < 10
+    default['mysql']['client']['packages'] = %w{mysql mysql-devel}
+  else
+    default['mysql']['client']['packages'] = %w{mysql libmysqlclient_r16 libmysqlclient-devel}
+  end
 when "windows"
   package_file = node['mysql']['client']['package_file']
   remote_file "#{Chef::Config[:file_cache_path]}/#{package_file}" do
