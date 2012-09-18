@@ -23,7 +23,7 @@ default['mysql']['port']                       = 3306
 case node["platform"]
 when "suse"
   default['mysql']['server']['packages']      = %w{mysql-community-server-client mysql-community-server}
-  default['mysql']['server']['conflicting_packages'] = %w{mariadb mariadb-client}
+  default['mysql']['server']['conflicting_packages'] = %w{mariadb mariadb-client mysql-cluster mysql-cluster-client}
   default['mysql']['service_name']            = "mysqld"
   default['mysql']['basedir']                 = "/usr"
   default['mysql']['data_dir']                = "/var/lib/mysql"
