@@ -22,7 +22,7 @@ default['mysql']['port']                       = 3306
 
 case node["platform"]
 when "centos", "redhat", "fedora", "suse", "scientific", "amazon"
-  default['mysql']['server']['packages']      = %w{mysql-server}
+  default['mysql']['server']['packages']      = %w{mysql-community-server-client mysql-community-server}
   default['mysql']['server']['conflicting_packages'] = %w{mariadb mariadb-client}
   default['mysql']['service_name']            = "mysqld"
   default['mysql']['basedir']                 = "/usr"
