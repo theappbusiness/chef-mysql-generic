@@ -21,6 +21,12 @@
 ::Chef::Node.send(:include, Opscode::Mysql::Helpers)
 
 case node['platform']
+when "suse"
+  if node['platform_version'].to_f < 10
+    default['mysql']['client']['packages'] = %w{mysql mysql-devel}
+  else
+    default['mysql']['client']['packages'] = %w{mysql libmysqlclient_r16 libmysqlclient-devel}
+  end
 when "centos", "redhat", "suse", "fedora", "scientific", "amazon"
   default['mysql']['client']['packages'] = %w{mysql mysql-devel}
 when "ubuntu","debian"
