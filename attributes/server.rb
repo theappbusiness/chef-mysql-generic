@@ -34,7 +34,7 @@ when "suse"
   set['mysql']['conf_dir']                    = '/etc'
   set['mysql']['confd_dir']                   = '/etc/mysql/conf.d'
   set['mysql']['socket']                      = "/var/lib/mysql/mysql.sock"
-  set['mysql']['pid_file']                    = "/var/run/mysqld/mysqld.pid"
+  set['mysql']['pid_file']                    = "/var/run/mysql/mysqld.pid"
   set['mysql']['old_passwords']               = 1
   set['mysql']['grants_path']                 = "/etc/mysql_grants.sql"
   # RHEL/CentOS mysql package does not support this option.
