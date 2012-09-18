@@ -110,16 +110,28 @@ unless platform?(%w{mac_os_x})
     end
   end
 
-  service "mysql" do
-    service_name node['mysql']['service_name']
-    if node['mysql']['use_upstart']
-      restart_command "restart mysql"
-      stop_command "stop mysql"
-      start_command "start mysql"
+  if platform? "suse"
+    service "mysql" do
+      service_name node['mysql']['service_name']
+      restart_command "rcmysql restart"
+      stop_command "rcmysql stop"
+      start_command "rcmysql start"
+      supports :status => true, :restart => true, :reload => true
+      action :start
     end
-    supports :status => true, :restart => true, :reload => true
-    action :nothing
+  else
+    service "mysql" do
+      service_name node['mysql']['service_name']
+      if node['mysql']['use_upstart']
+        restart_command "restart mysql"
+        stop_command "stop mysql"
+        start_command "start mysql"
+      end
+      supports :status => true, :restart => true, :reload => true
+      action :nothing
+    end
   end
+  
 
   skip_federated = case node['platform']
                    when 'fedora', 'ubuntu', 'amazon'
